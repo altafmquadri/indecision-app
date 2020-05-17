@@ -44,40 +44,59 @@ var template = React.createElement(
     )
 );
 
-var user = {
-    name: 'Altaf Quadri',
-    hobby: 'Riding a Motorcycle',
-    location: 'New York'
+var count = 0;
+var addOne = function addOne() {
+    count++;
+    renderCounterApp();
 };
-
-function getLocation(location) {
-    if (location) return React.createElement(
-        'p',
-        null,
-        'Location: ',
-        location
-    );
-}
-
-var template2 = React.createElement(
-    'div',
-    null,
-    React.createElement(
-        'h1',
-        null,
-        user.name ? user.name : 'Anonymous'
-    ),
-    user.hobby && React.createElement(
-        'p',
-        null,
-        user.hobby
-    ),
-    getLocation(user.location)
-);
+var minusOne = function minusOne() {
+    count--;
+    renderCounterApp();
+};
+var reset = function reset() {
+    count = 0;
+    renderCounterApp();
+};
 
 var appRoot = document.getElementById('app');
 
-ReactDOM.render(template, appRoot);
+var renderCounterApp = function renderCounterApp() {
+    var template2 = React.createElement(
+        'div',
+        null,
+        React.createElement(
+            'h1',
+            null,
+            'Count: ',
+            count
+        ),
+        React.createElement(
+            'button',
+            {
+                id: 'my-id',
+                className: 'button',
+                onClick: addOne },
+            '+1'
+        ),
+        React.createElement(
+            'button',
+            {
+                className: 'button',
+                onClick: minusOne },
+            '-1'
+        ),
+        React.createElement(
+            'button',
+            {
+                className: 'button',
+                onClick: reset },
+            'Reset'
+        )
+    );
+    ReactDOM.render(template2, appRoot);
+};
+
+renderCounterApp();
 
 /*
 Instruction in video 9 Setting up Babel
