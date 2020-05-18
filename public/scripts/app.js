@@ -1,20 +1,13 @@
 'use strict';
 
-var app = {
-    title: 'Indecision App',
-    subtitle: 'Put your life in the hands of a computer',
-    options: ['honey', 'sugar']
-};
+/* 
+babel src/playground/build-it-visible.js --out-file=public/scripts/app.js --presets="env,react" --watch 
+*/
 
-var onFormSubmit = function onFormSubmit(e) {
-    e.preventDefault();
-    var option = e.target.elements.option.value;
-    if (option) app.options.push(option), e.target.elements.option.value = '';
-    render();
-};
+var show = false;
 
-var onRemoveAll = function onRemoveAll() {
-    app.options = [];
+var toggleDetails = function toggleDetails() {
+    show = !show;
     render();
 };
 
@@ -25,65 +18,20 @@ var render = function render() {
         React.createElement(
             'h1',
             null,
-            app.title
-        ),
-        app.subtitle && React.createElement(
-            'p',
-            null,
-            app.subtitle
-        ),
-        app.options && app.options.length ? React.createElement(
-            'p',
-            null,
-            'Here are your options'
-        ) : React.createElement(
-            'p',
-            null,
-            'No options'
-        ),
-        React.createElement(
-            'p',
-            null,
-            app.options.length
+            'Visibilty Toggle'
         ),
         React.createElement(
             'button',
-            { onClick: onRemoveAll },
-            'Remove All'
+            { onClick: toggleDetails },
+            !show ? 'Show Details' : 'Hide Details'
         ),
-        React.createElement(
-            'ol',
+        show && React.createElement(
+            'p',
             null,
-            app.options.map(function (o, i) {
-                return React.createElement(
-                    'li',
-                    { key: i },
-                    o
-                );
-            })
-        ),
-        React.createElement(
-            'form',
-            { onSubmit: onFormSubmit },
-            React.createElement('input', { type: 'text', name: 'option' }),
-            React.createElement(
-                'button',
-                null,
-                'Add Option'
-            )
+            'Here are the details'
         )
     );
-    ReactDOM.render(template, appRoot);
+    ReactDOM.render(template, document.getElementById('app'));
 };
 
-var appRoot = document.getElementById('app');
-
 render();
-
-/*
-Instruction in video 9 Setting up Babel
-npm init
-npm i -g babel-cli@6.24.1
-npm i babel-preset-react@6.24.1
-npm i babel-preset-env@1.5.2
-babel src/app.js --out-file=public/scripts/app.js --presets="env,react" --watch */
