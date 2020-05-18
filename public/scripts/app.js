@@ -3,7 +3,7 @@
 var app = {
     title: 'Indecision App',
     subtitle: 'Put your life in the hands of a computer',
-    options: []
+    options: ['honey', 'sugar']
 };
 
 var onFormSubmit = function onFormSubmit(e) {
@@ -54,16 +54,13 @@ var render = function render() {
         React.createElement(
             'ol',
             null,
-            React.createElement(
-                'li',
-                null,
-                'Item One'
-            ),
-            React.createElement(
-                'li',
-                null,
-                'Item Two'
-            )
+            app.options.map(function (o, i) {
+                return React.createElement(
+                    'li',
+                    { key: i },
+                    o
+                );
+            })
         ),
         React.createElement(
             'form',

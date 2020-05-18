@@ -1,7 +1,7 @@
 const app = {
     title: 'Indecision App',
     subtitle: 'Put your life in the hands of a computer',
-    options: []
+    options: ['honey', 'sugar']
 }
 
 const onFormSubmit = (e) => {
@@ -27,8 +27,7 @@ const render = () => {
             <p>{app.options.length}</p>
             <button onClick={onRemoveAll}>Remove All</button>
             <ol>
-                <li>Item One</li>
-                <li>Item Two</li>
+                {app.options.map((o, i) => <li key={i}>{o}</li>)}
             </ol>
             <form onSubmit={onFormSubmit}>
                 <input type='text' name='option'></input>
