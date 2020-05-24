@@ -10,7 +10,7 @@ class IndecisionApp extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            options: props.options
+            options: []
         }
         this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
         this.handlePick = this.handlePick.bind(this)
@@ -18,7 +18,29 @@ class IndecisionApp extends React.Component {
         this.handleDeleteOption = this.handleDeleteOption.bind(this)
     }
 
-    handleDeleteOptions() {
+    componentDidMount() {
+        try {
+            const json = localStorage.getItem('options')
+            const options = JSON.parse(json)
+            if (options) this.setState(() => ({ options }))
+        } catch (e) {
+            // do nothing
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.options.length !== this.state.options.length) {
+            const json = JSON.stringify(this.state.options)
+            localStorage.setItem('options', json)
+            console.log('saving data');
+        }
+    }
+
+    componentWillUnmount() {
+        console.log('cwun');
+    }
+
+    'handleDeleteOptions'() {
         this.setState(() => ({ options: [] }))
     }
 
@@ -58,10 +80,6 @@ class IndecisionApp extends React.Component {
     }
 }
 
-IndecisionApp.defaultProps = {
-    options: []
-}
-
 const Header = (props) => {
     return (
         <div>
@@ -90,6 +108,7 @@ const Options = (props) => {
     return (
         <div>
             <button onClick={props.handleDeleteOptions}>Remove All</button>
+            {!props.options.length && <p>Please add an option to get started</p>}
             {props.options.map((o, i) => (
                 <Option key={i}
                     optionText={o}
@@ -121,6 +140,10 @@ class AddOption extends React.Component {
         const option = e.target.elements.option.value.trim()
         const error = this.props.handleAddOption(option)
         this.setState(() => ({ error }))
+
+        if (!error) {
+            e.target.elements.option.value = ''
+        }
     }
     render() {
         const { error } = this.state
