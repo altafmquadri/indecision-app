@@ -62,10 +62,6 @@ class Counter extends React.Component {
         )
     }
 }
-
-
-
-
 ReactDOM.render(<Counter />, document.getElementById('app'))
 
 
