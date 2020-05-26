@@ -30,6 +30,7 @@ to run npm i live-server
 */
 
 console.log('hi');
+console.log('another one');
 
 var IndecisionApp = function (_React$Component) {
     _inherits(IndecisionApp, _React$Component);
@@ -40,7 +41,7 @@ var IndecisionApp = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (IndecisionApp.__proto__ || Object.getPrototypeOf(IndecisionApp)).call(this, props));
 
         _this.state = {
-            options: []
+            options: ['item one', 'item two']
         };
         _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
         _this.handlePick = _this.handlePick.bind(_this);
