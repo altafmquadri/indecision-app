@@ -3,17 +3,38 @@ import AddOption from './AddOption'
 import Options from './Options'
 import Action from './Action'
 import Header from './Header'
+import OptionModal from './OptionModal'
 
 class IndecisionApp extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            options: ['item one', 'item two']
-        }
-        this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
-        this.handlePick = this.handlePick.bind(this)
-        this.handleAddOption = this.handleAddOption.bind(this)
-        this.handleDeleteOption = this.handleDeleteOption.bind(this)
+    state = {
+        options: [],
+        selectedOption: undefined
+    }
+
+    handleDeleteOptions = () => {
+        this.setState(() => ({ options: [] }))
+    }
+
+    handleDeleteOption = (option) => {
+        this.setState((prevState) => ({
+            options: prevState.options.filter(o => o !== option)
+        }))
+    }
+
+    handlePick = () => {
+        let random = Math.floor(Math.random() * this.state.options.length)
+        let option = this.state.options[random]
+        this.setState(() => ({ selectedOption: option }))
+    }
+
+    handleClearSelectedOption = () => {
+        this.setState(() => ({selectedOption: undefined}))
+    } 
+
+    handleAddOption = (option) => {
+        if (!option) return 'Enter valid value to add item'
+        if (this.state.options.indexOf(option) > -1) return 'This option already exists'
+        this.setState(prevState => ({ options: [...prevState.options, option] }))
     }
 
     componentDidMount() {
@@ -37,31 +58,9 @@ class IndecisionApp extends Component {
         console.log('cwun');
     }
 
-    'handleDeleteOptions'() {
-        this.setState(() => ({ options: [] }))
-    }
-
-    handleDeleteOption(option) {
-        this.setState((prevState) => ({
-            options: prevState.options.filter(o => o !== option)
-        }))
-    }
-
-    handlePick() {
-        let random = Math.floor(Math.random() * this.state.options.length)
-        let option = this.state.options[random]
-        alert(option)
-    }
-
-    handleAddOption(option) {
-        if (!option) return 'Enter valid value to add item'
-        if (this.state.options.indexOf(option) > -1) return 'This option already exists'
-        this.setState(prevState => ({ options: [...prevState.options, option] }))
-    }
-
     render() {
         const subtitle = 'Put your life in the hands of a computer'
-        const { options } = this.state
+        const { options, selectedOption } = this.state
         return (
             <div>
                 <Header subtitle={subtitle} />
@@ -72,9 +71,11 @@ class IndecisionApp extends Component {
                     handleDeleteOptions={this.handleDeleteOptions}
                 />
                 <AddOption handleAddOption={this.handleAddOption} />
+                <OptionModal selectedOption={selectedOption} 
+                handleClearSelectedOption={this.handleClearSelectedOption}
+                />
             </div>
         )
     }
 }
-
 export default IndecisionApp
