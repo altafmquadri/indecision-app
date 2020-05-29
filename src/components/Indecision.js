@@ -28,8 +28,8 @@ class IndecisionApp extends Component {
     }
 
     handleClearSelectedOption = () => {
-        this.setState(() => ({selectedOption: undefined}))
-    } 
+        this.setState(() => ({ selectedOption: undefined }))
+    }
 
     handleAddOption = (option) => {
         if (!option) return 'Enter valid value to add item'
@@ -64,15 +64,20 @@ class IndecisionApp extends Component {
         return (
             <div>
                 <Header subtitle={subtitle} />
-                <Action hasOptions={options.length > 0}
-                    handlePick={this.handlePick} />
-                <Options options={options}
-                    handleDeleteOption={this.handleDeleteOption}
-                    handleDeleteOptions={this.handleDeleteOptions}
-                />
-                <AddOption handleAddOption={this.handleAddOption} />
-                <OptionModal selectedOption={selectedOption} 
-                handleClearSelectedOption={this.handleClearSelectedOption}
+                <div className='container'>
+                    <Action hasOptions={options.length > 0}
+                        handlePick={this.handlePick} />
+
+                    <div className='widget'>
+                        <Options options={options}
+                            handleDeleteOption={this.handleDeleteOption}
+                            handleDeleteOptions={this.handleDeleteOptions}
+                        />
+                        <AddOption handleAddOption={this.handleAddOption} />
+                    </div>
+                </div>
+                <OptionModal selectedOption={selectedOption}
+                    handleClearSelectedOption={this.handleClearSelectedOption}
                 />
             </div>
         )

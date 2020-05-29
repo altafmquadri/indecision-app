@@ -19,11 +19,15 @@ class AddOption extends React.Component {
         const { error } = this.state
         return (
             <div>
-                {error && <p> This Option already exists</p>}
-                <form onSubmit={this.handleAddOption}>
-                    <input type='text'
+                {error && <p className='add-option-error'> This Option already exists</p>}
+                <form 
+                className='add-option'
+                onSubmit={this.handleAddOption}>
+                    <input 
+                    className='add-option__input'
+                    type='text'
                         name='option'></input>
-                    <button>Add Option</button>
+                    <button className='button'>Add Option</button>
                 </form>
             </div>
         )
